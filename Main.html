@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free BTC Cloud Mining</title>
+</head>
+<body>
+    <h1>Free Bitcoin Cloud Mining</h1>
+    <input type="text" id="username" placeholder="Enter Username">
+    <button onclick="register()">Register</button>
+    <button onclick="mine()">Start Mining</button>
+    <button onclick="checkBalance()">Check Balance</button>
+    <p id="status"></p>
+
+    <script>
+        function register() {
+            let username = document.getElementById("username").value;
+            fetch('/register', {
+                method: 'POST',
+                body: new URLSearchParams({ 'username': username }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).then(res => res.json()).then(data => {
+                document.getElementById("status").innerText = JSON.stringify(data);
+            });
+        }
+
+        function mine() {
+            let username = document.getElementById("username").value;
+            fetch('/mine', {
+                method: 'POST',
+                body: new URLSearchParams({ 'username': username }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).then(res => res.json()).then(data => {
+                document.getElementById("status").innerText = JSON.stringify(data);
+            });
+        }
+
+        function checkBalance() {
+            let username = document.getElementById("username").value;
+            fetch(`/balance?username=${username}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("status").innerText = JSON.stringify(data);
+            });
+        }
+    </script>
+</body>
+</html>
